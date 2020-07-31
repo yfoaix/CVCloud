@@ -1,0 +1,283 @@
+﻿<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+    <link rel="stylesheet" type="text/css" href="/css/AI/pgwslideshow.css">
+    <link rel="stylesheet" type="text/css" href="/css/AI/tabblock.css">
+    <link rel="stylesheet" type="text/css" href="/css/AI/attributebar.css">
+    <link rel="stylesheet" type="text/css" href="/css/AI/formatjson.css">
+	<style>
+  #img{
+  	position:absolute;
+  }
+  .markcontainer{
+	  position: absolute;
+  }
+  .upload{
+	  position: absolute;
+  }
+  #attribute {
+  background-color: #e3e3e3;
+  padding: 1px;
+  display: block;
+  border-radius: 5px;
+  margin: auto;
+}
+.loadingSpinner {
+    animation: spinnerFrame 1s linear infinite;
+    border: solid 1.5em #F90;
+    border-right: solid 1.5em transparent;
+    border-left: solid 1.5em transparent;
+    background-color: #333;
+    border-radius: 100%;
+    width: 0;
+    height: 0;
+    z-index: 2;
+}
+@keyframes spinnerFrame {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    50% {
+        transform: rotate(60deg)
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+</style>
+</head>
+<body>
+<div style="text-align:center">
+	<div style="margin:0 auto;width:1000px">
+		<div style="width:50%;float:left">
+			<ul class="pgwSlideshow">
+			    <li><img src="asset/antelope_10003.jpg"/></li>
+                <li><img src="asset/bluewhale_10062.jpg"/></li>
+                <li><img src="asset/bobcat_10599.jpg"/></li>
+                <li><img class="upload" src="/images/upload.png"/></li>
+                <li></li>
+			</ul>
+		</div>
+        <div style="width:50%;float:left">
+            <div class="tab-block information-tab">
+                <div class="tab-buttons ">
+                    <a class="tab-button cur" data-tab="one">分析结果</a>
+                    <a class="tab-button" data-tab="two">输出Json</a>
+                </div>
+                <div class="tabs">
+                    <div class="tab-item active" id="tab-one">
+                        <div class="blackpanel">
+                        	<div style=" padding:10px 10px 10px 10px; ">
+                            	<div class="panel">
+                                    <a>&nbsp;&nbsp;类别：</a>
+                                    <a id="class" style="color:#09F"></a>
+                                    <br/>
+                                    <br/>
+                                </div>
+                                <br/>
+                                <div class="panel" style=" height:80%;">
+                                   <a>&nbsp;&nbsp;属性：</a>
+                                   <br/>
+                                   <br/>
+                                   <div id="attribute" style="overflow:scroll;width:90%">
+                                   </div>
+                                   <br/>
+                                </div>
+                             </div>
+                        </div>
+                    </div>
+                    <div class="tab-item" id="tab-two">
+                    	<div style=" padding:10px 10px 10px 10px; ">
+                    		<div class="blackpanel">
+                            	<div id="jsonPanel" class="panel">
+                                </div>
+                            </div>
+                    	</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</div>
+</div>
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/js/AI/pgwslideshow.js"></script>
+    <script src="/js/AI/upload.js"></script>
+    <script src="/js/AI/formatjson.js"></script>
+    <script>
+    var uploadSign = false;
+	function PostImage(file){
+		const postURI = "/api/HAP/1";/////////////////////////////////////////////////////////////////////////
+		var formData = new FormData();
+		formData.append("Image",file);
+		$.ajax({
+            url: postURI,
+            type: 'POST',
+            data: formData,
+            async: true,
+            contentType: false,
+            processData: false,
+            dataType: 'text',
+            success: function (json) {
+                respondedJson = json;
+                $(".loadingSpinner").remove();
+                slideData.uploadElement(slideData.data[slideData.slideCount-2]);
+                ShowResult(json);
+                isUploading = false;
+            },
+            error: function (msg) {
+                console.log(msg);
+                isUploading = false;
+            }
+		});
+    }
+    function GetJson(name) {
+        const getURI = "/api/HAP/";
+        $.ajax({
+            url: getURI + name,
+            type: 'GET',
+            async: false,
+            cache: true,
+            success: function (json) {
+                ShowResult(json);
+            },
+            error: function (msg) {
+                console.log(msg);
+            }
+        });
+    }
+	</script>
+	<script type="text/javascript">
+        var slideData;
+        window.onload = function () {
+            slideData = $('.pgwSlideshow').pgwSlideshow({
+                transitionEffect: 'fading',
+                autoSlide: false,
+                minImgHeight: 300,
+                maxImgHeight: 600,
+                slideEventHandler: function (index) {
+                    analyze();
+                    return;
+                },
+                tabPanelAnimation: function (img) {
+                    var height = img.height + 102;
+                    img.style.height = "";
+                    $('.tab-block > .tabs').animate({ height: height + "px" }, { duration: 'fast', queue: false });
+                    height -= 68;
+                    $('#jsonPanel > pre').animate({ height: height + "px" }, { duration: 'fast', queue: false });
+                    height -= 128;
+                    $('#attribute').animate({ height: height + "px" }, { duration: 'fast', queue: false });
+                    return;
+                }
+            });
+            var dragImgUpload = new DragImgUpload("#upload", {
+                callback: function (files) {
+                    //回调函数
+                    uploadSign = true;
+                    ClearPanel();
+                    $(".ps-current").append('<div class="loadingSpinner"></div>');
+                    var index = slideData.getCurrentSlide() - 1;
+                    setTimeout(function () { slideData.uploadElement(slideData.data[index]); }, 100);
+                    PostImage(files[0]);
+                }
+            });
+            $('.tab-button').click(function () {
+                var tab = $(this).data('tab');
+                $(this).addClass('cur').siblings('.tab-button').removeClass('cur');
+                $('#tab-' + tab + '').addClass('active').siblings('.tab-item').removeClass('active');
+            });
+        };
+	</script>
+    <script>
+	!function(i) {
+    i.fn.attributebar = function(t) {
+        var e = i.extend({
+            speed: 1e3,
+            bg: ""
+        },
+        t),
+        n = e.bg,
+        d = i(this).find(".filled"),
+        s = i(this).find(".title");
+        return n ? (d.css({
+            "background-color": n
+        }), s.css({
+            "background-color": "rgba(0,0,0,0.5)"
+        })) : this.each(function(t) {
+            i(this).find(".filled").animate({
+                width: i(this).find(".filled").data("width")
+            },
+            e.speed)
+        }),
+        this
+    }
+} (jQuery);
+</script>
+<script>
+    let colorNames = new Array("black","white","blue","brown","gray","orange","red","yellow","green","purple","cyan");
+    function ShowResult(json) {
+        ClearPanel();
+        $("[data-tab='one']").click();
+        Process(json, 'jsonPanel');
+        let attributes = eval("(" + json + ")");
+        if (attributes.error_msg != null) {
+            return;
+        }
+        document.getElementById("class").innerHTML = attributes.class;
+        var attributePanel = $("#attribute");
+        let colorIndex = 0;
+        for (let key in attributes.attributes) {
+            let percent = attributes.attributes[key] * 100.0;
+            percent = percent.toFixed(2);
+            if (percent == 0) {
+                continue;
+            }
+            attributePanel.append('<div class="attributebar ' + colorNames[colorIndex] + '">'
+                + '<div class="filled" data-width="' + percent + '%"></div>'
+                + '<span class="title">' + key + '</span>'
+                + '<span class="percent">' + percent + '%</span>'
+                + '</div>');
+            colorIndex++;
+            if (colorIndex >= colorNames.length) {
+                colorIndex = 0;
+            }
+        }
+        $('.attributebar').attributebar({speed: 1000});
+    }
+    function ClearPanel() {
+        $("#jsonPanel > pre").empty();
+        document.getElementById("class").innerHTML = "";
+        $("#attribute").empty();
+    }
+</script>
+<script>
+    let initialSign = true;
+    var respondedJson;
+    function analyze() {
+        if (uploadSign == true) {
+            uploadSign = false;
+            return;
+        }
+        if (initialSign == true) {
+            initialSign = false;
+        }
+        else if (slideData.getCurrentSlide() == slideData.getSlideCount() - 1) {
+            if (respondedJson == null) {
+                ClearPanel();
+                return;
+            }
+            ShowResult(respondedJson);
+            return;
+        }
+        var fileRoutes = $("#img").attr("src").split("/");
+        if (fileRoutes.length - 1 < 0) {
+            return;
+        }
+        GetJson(fileRoutes[fileRoutes.length-1]);
+    }
+</script>
+</body>
+</html>

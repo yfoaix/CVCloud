@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>ImageSegmentation</title>
+<link rel="stylesheet" type="text/css" href="/css/AI/volumeslicer/volumeslicer.css" media="screen" />
+    <style>
+        #ba_images div div img{height:512px;width:512px;}#ext_before img{opacity:0.5;}#toolbox{top:500px;right:190px;}
+    </style>
+</head>
+<body>
+<div id="example" class="beforeafter_slider shadow1">
+  <ul>
+  </ul>
+</div>
+<div class="progress-factor flexy-item">
+	<div class="progress-bar">
+		<div class="bar has-rotation has-colors navy ruler" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="50" id="boxbar">
+			<div class="tooltip white"></div>
+			<div class="bar-face face-position roof percentage" onclick="BoxClick(event)"></div>
+			<div class="bar-face face-position back percentage"></div>
+			<div class="bar-face face-position floor percentage volume-lights"></div>
+			<div class="bar-face face-position left"></div>
+			<div class="bar-face face-position right"></div>
+			<div class="bar-face face-position front percentage volume-lights shine" onclick="BoxClick(event)"></div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="/js/AI/volumeslicer/jquery.out.js"></script>
+<script type="text/javascript" src="/js/AI/volumeslicer/volumeslicer.js"></script>
+<script type="text/javascript">
+const boxBarLength = 320.0;
+var index = 1;
+function BoxClick(event){
+	var selected = Math.round(event.offsetX/boxBarLength*50);
+	if(selected<1){
+		selected = 1;
+	}
+	if(selected>index){
+		for(var i = index;i<selected;++i){
+			document.getElementById("previous").click();
+		}
+	}
+	else if(selected==index){
+
+	}
+	else{
+		for(var i = index;i>selected;--i){
+			document.getElementById("next").click();
+		}
+	}
+}
+function IndexChange(i){
+	$('#boxbar').attr('aria-valuenow',i+1);
+	index = i+1;
+}
+</script>
+<script type="text/javascript">
+$(function(){
+	var ul = $('#example > ul');
+	for(var i = 1;i<=50;++i){
+		ul.append('<li><img src="result/result_'+i+'.bmp" alt="result/trans_'+i+'.bmp"/></li>');
+	}
+	jQuery('#example').beforeAfter_slider({
+		width:512,
+		height:512,
+		banner_bordersize:12,
+		start_from:'right',
+		start_pos:256,
+		follow:true
+    });
+    $('img').css('transform', 'rotate(90deg)');
+});
+</script>
+</body>
+</html>

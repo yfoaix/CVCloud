@@ -1,0 +1,110 @@
+.attributebar {
+    width: 100%;
+    padding: 10px;
+    margin: 2px 0;
+    position: relative;
+    display: block;
+    overflow: hidden;
+    height: 10px;
+    background-color: #fff;
+    border-radius: 10px 10px 10px 10px;
+    font-size: 10px;
+    -webkit-box-sizing: border-box;
+}
+.attributebar.black .title {
+	background-color:#333
+}
+.attributebar.black .filled {
+	background-color:#666
+}
+.attributebar.white .title {
+	background-color:#999
+}
+.attributebar.white .filled {
+	background-color:#CCC
+}
+.attributebar.blue .title {
+	background-color:#06F
+}
+.attributebar.blue .filled {
+	background-color:#09F
+}
+.attributebar.brown .title {
+	background-color:#C30
+}
+.attributebar.brown .filled {
+	background-color:#C60
+}
+.attributebar.gray .title {
+	background-color:#999
+}
+.attributebar.gray .filled {
+	background-color:#CCC
+}
+.attributebar.orange .title {
+	background-color:#F30
+}
+.attributebar.orange .filled {
+	background-color:#F60
+}
+.attributebar.red .title {
+	background-color:#F00
+}
+.attributebar.red .filled {
+	background-color:#F33
+}
+.attributebar.yellow .title {
+	background-color:#FC0
+}
+.attributebar.yellow .filled {
+	background-color:#FF6
+}
+.attributebar.green .title {
+	background-color:#6C0
+}
+.attributebar.green .filled {
+	background-color:#6F0
+}
+.attributebar.purple .title {
+	background-color:#C3F
+}
+.attributebar.purple .filled {
+	background-color:#F0F
+}
+.attributebar.cyan .title {
+	background-color:#3CF
+}
+.attributebar.cyan .filled {
+	background-color:#6FF
+}
+.attributebar .title {
+	background-color:rgba(0,0,0,.6);
+	height:10px;
+	width:85px;
+	text-align:center;
+	left:0;
+	color:#f0f0f0;
+	border-radius:10px 0px 0px 10px
+}
+.attributebar .percent,.attributebar .title {
+	padding:2px 5px 8px 5px;
+	position:absolute;
+	top:0;
+	z-index:9
+}
+.attributebar .percent {
+	right:0;
+	color:#000;
+	font-weight:700
+}
+.attributebar .filled {
+    z-index: 8;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,80,80,.3);
+    height: 100%;
+    width: 20px;
+    border-radius: 10px 10px 10px 10px;
+    -webkit-box-sizing: border-box;
+}

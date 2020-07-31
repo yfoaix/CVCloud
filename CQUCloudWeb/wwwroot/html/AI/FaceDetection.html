@@ -1,0 +1,446 @@
+﻿<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+    <link rel="stylesheet" type="text/css" href="/css/AI/pgwslideshow.css">
+    <link rel="stylesheet" type="text/css" href="/css/AI/tabblock.css">
+    <link rel="stylesheet" type="text/css" href="/css/AI/formatjson.css">
+	<style>
+		.rect{
+			left: -1000px;
+			position: absolute;
+			top: -1000px;
+			z-index: 2;
+		}
+		.rect{
+		  border: 2px solid lawngreen;
+		}
+		.markcontainer{
+			position: absolute;
+		}
+		.box {
+			width: 100px;
+			height: 100px;
+			position: relative;
+			transform-style: preserve-3d;
+			transform-origin: center center -50px;
+			
+		}
+		.box div {
+			width: 100px;
+			height: 100px;
+			position: absolute;
+			color: #fff;
+			text-align: center;
+		}
+		.box div{
+			border: 2px solid #000;
+			opacity:0.5;
+		}
+		.box div:nth-of-type(1) {
+			left: 0;
+			top: -100px;
+			
+			transform-origin: bottom;
+			transform: rotateX(90deg);
+		}
+		.box div:nth-of-type(2) {
+			left: -100px;
+			top: 0;
+			
+			transform-origin: right;
+			transform: rotateY(-90deg);
+		}
+		.box div:nth-of-type(3) {
+			left: 0;
+			top: 0;
+			background: yellow;
+		}
+		.box div:nth-of-type(4) {
+			left: 100px;
+			top: 0;
+			
+			transform-origin: left;
+			transform: rotateY(90deg);
+		}
+		.box div:nth-of-type(5) {
+			left: 0;
+			top: 100px;
+			
+			transform-origin: top;
+			transform: rotateX(-90deg);
+		}
+		.box div:nth-of-type(6) {
+			left: 0;
+			top: 0;
+			
+			transform: translateZ(-100px);
+		}
+		#img{
+			position:absolute;
+		}
+		.markcontainer{
+			position: absolute;
+		}
+		.upload{
+			position: absolute;
+		}
+		#attribute {
+			padding: 1px;
+			display: block;
+			border-radius: 5px;
+			margin: auto;
+		}
+		.loadingSpinner {
+			animation: spinnerFrame 1s linear infinite;
+			border: solid 1.5em #F90;
+			border-right: solid 1.5em transparent;
+			border-left: solid 1.5em transparent;
+			background-color: #333;
+			border-radius: 100%;
+			width: 0;
+			height: 0;
+			z-index: 2;
+		}
+
+		@keyframes spinnerFrame {
+			0% {
+				transform: rotate(0deg);
+			}
+
+			50% {
+				transform: rotate(60deg)
+			}
+
+			100% {
+				transform: rotate(360deg);
+			}
+		}
+		#elementPanel .pgwSlideshow .ps-list{
+			background: #FFFFFF;
+			box-shadow: 5px 5px 5px 5px #333;
+			
+		}
+
+		#elementPanel .pgwSlideshow .ps-list li .ps-item.ps-selected {
+			border: 4px solid #FFA500;
+		}
+		#attribute table tr{
+			padding-bottom: 10px;
+		}
+		#attribute table tr td:nth-of-type(1){
+			font-weight: 600;
+			height: 50px;
+			min-width: 80px;
+		}		
+		#attribute table tr td span:nth-of-type(1){
+			color: red;
+		}
+		#attribute table tr td span:nth-of-type(2){
+			color: green;
+		}
+		#attribute table tr td span:nth-of-type(3){
+			color: blue;
+		}
+	</style>
+	</head>
+	<body>
+	<div style="text-align:center">
+		<div style="margin:0 auto;width:1000px">
+			<div style="width:50%;float:left">
+				<ul class="pgwSlideshow">
+					<li><img src="asset/emilia.jpeg"/></li>
+					<li><img src="asset/f2.jpg"/></li>
+					<li><img src="asset/faces.jpg"/></li>
+					<li><img class="upload" src="/images/upload.png"/></li>
+					<li></li>
+				</ul>
+			</div>
+			<div style="width:50%;float:left">
+				<div class="tab-block information-tab">
+					<div class="tab-buttons ">
+						<a class="tab-button cur" data-tab="one">分析结果</a>
+						<a class="tab-button" data-tab="two">输出Json</a>
+					</div>
+					<div class="tabs">
+						<div class="tab-item active" id="tab-one">
+							<div class="blackpanel">
+								<div style=" padding:10px 10px 10px 10px; ">
+									<div id="elementPanel">
+	
+									</div>
+									<br/>
+									<div class="panel" style=" height:80%;">
+										<br/>
+										<div id="attribute" style="overflow:scroll;width:90%">
+
+										</div>
+										<br/>
+									</div>
+								 </div>
+							</div>
+						</div>
+						<div class="tab-item" id="tab-two">
+							<div style=" padding:10px 10px 10px 10px; ">
+								<div class="blackpanel">
+									<div id="jsonPanel" class="panel">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+	<script src="/js/AI/upload.js"></script>
+    <script src="/js/AI/pgwslideshow.js"></script>
+    <script src="/js/AI/formatjson.js"></script>
+	<script type="text/javascript">
+		var slideData = null;
+        var elementData = null;
+        window.onload = function () {
+                slideData = $('.pgwSlideshow').pgwSlideshow({
+		    	transitionEffect:'fading',
+                autoSlide: false,
+                minImgHeight: 300,
+                maxImgHeight: 600,
+				slideEventHandler: function (index){
+					ChangeImage(index);
+					return;
+				},
+                tabPanelAnimation: function (img) {
+                    
+                    var height = img.height + 102;
+                    img.style.height = "";
+                    $('.tab-block > .tabs').animate({ height: height + "px" }, { duration: 'fast', queue: false });
+                    height -= 100;
+                    $('#jsonPanel > pre').animate({ height: height + "px" }, { duration: 'fast', queue: false });
+                    height -= 150;
+                    $('#attribute').animate({ height: height + "px" }, { duration: 'fast', queue: false });
+                    return;
+                }
+		    });
+			var dragImgUpload = new DragImgUpload("#upload",{
+			callback:function (files) {
+			    //回调函数
+			    uploadSign = true;
+			    ClearPanel();
+			    $(".ps-current").append('<div class="loadingSpinner"></div>');
+				var index = slideData.getCurrentSlide()-1;
+				setTimeout(function(){slideData.uploadElement(slideData.data[index]);},100);
+				PostImage(files[0]);
+			}
+			});
+			$('.tab-button').click(function() {
+			var tab = $(this).data('tab');
+			$(this).addClass('cur').siblings('.tab-button').removeClass('cur');
+			$('#tab-' + tab + '').addClass('active').siblings('.tab-item').removeClass('active');
+			});
+        };
+	</script>
+	<script>
+	var uploadSign = false;
+	function PostImage(file){
+		const postURI = "/api/FaceDetection/1";/////////////////////////////////////////////////////////////////////////
+		var formData = new FormData();
+		formData.append("Image",file);
+		$.ajax({
+	        url: postURI,
+	        type: 'POST',
+	        data: formData,
+	        async: true,
+	        contentType: false,
+	        processData: false,
+	        dataType: 'text',
+	        success: function (json) {
+	            respondedJson = json;
+	            $(".loadingSpinner").remove();
+	            slideData.uploadElement(slideData.data[slideData.slideCount-2]);
+	            ShowResult(json);
+	            isUploading = false;
+	        },
+	        error: function (msg) {
+	            console.log(msg);
+	            isUploading = false;
+	        }
+		});
+	}
+	function GetJson(name) {
+	    const getURI = "/api/FaceDetection/";
+	    $.ajax({
+	        url: getURI + name,
+	        type: 'GET',
+	        async: false,
+	        cache: true,
+	        success: function (json) {
+	            ShowResult(json);
+	        },
+	        error: function (msg) {
+	            console.log(msg);
+	        }
+	    });
+	}
+	</script>
+	<script>
+		var faces = new Array();
+		var faceAttributes = new Array();
+		function ShowResult(json) {
+            ClearPanel();
+            $("[data-tab='one']").click();
+			Process(json, 'jsonPanel');
+			let jsonObject = eval("(" + json + ")");
+			if(faces.length>0){
+				faces.splice(0,faces.length);
+				faceAttributes.splice(0,faceAttributes.length);
+				$(".rect").remove();
+			}
+			var slideShow = document.createElement("ul");
+			slideShow.classList.add("pgwSlideshow");
+			document.getElementById("elementPanel").appendChild(slideShow);
+			let list = document.createElement("li");
+			let srcImage = new Image();
+			let img = document.getElementById("img");
+			
+			srcImage.src = img.src;
+			let scaleX = img.width/srcImage.width;
+			let scaleY = img.height/srcImage.height;
+			list.appendChild(CutImage(srcImage,0,0,srcImage.width,srcImage.height));
+			slideShow.appendChild(list);
+			if (jsonObject.error_msg == null) {
+				let x = 0;
+				let y = 0;
+				let w = 0;
+				let h = 0;
+				for(let index in jsonObject["faces"]){
+					x = jsonObject["faces"][index]["rect"][0];
+					y = jsonObject["faces"][index]["rect"][1];
+					w = jsonObject["faces"][index]["rect"][2] - x;
+					h = jsonObject["faces"][index]["rect"][3] - y;
+					//
+					list = document.createElement("li");
+					list.appendChild(CutImage(document.getElementById("img"),x,y,w,h));
+					slideShow.appendChild(list);
+					//
+					faces.push(DrawRect(x*scaleX,y*scaleY,w*scaleX,h*scaleY));
+					//
+					faceAttributes.push(jsonObject["faces"][index]);
+				}
+			}
+			
+			elementData = $('#elementPanel>.pgwSlideshow').pgwSlideshow({
+				transitionEffect:'fading',
+				autoSlide: false,
+				displayCurrents: false,
+				slideEventHandler: function (index){
+					SelectElement(index);
+					return;
+				}
+			});
+		}
+		function DrawRect(x,y,w,h){
+			let rect = document.createElement("div");
+			rect.classList.add("rect");
+			rect.style.left = x+"px";
+			rect.style.top = y+"px";
+			rect.style.width = w+"px";
+			rect.style.height = h+"px";
+			$(".markcontainer").append(rect);
+			return rect;
+		}
+		function ShowSingleResult(index){
+			if(faceAttributes.length-1<index){
+				return;
+			}
+			$("#attribute").append('<table></table>');
+			if(faceAttributes[index]["3Dstatus"]==0){
+				$("#attribute>table").append('<tr><td></td></tr>');
+				$("#attribute>table>tr>td").append('<div class="box"></div>');
+				for(let i = 1;i<=6;++i){
+					$(".box").append('<div></div>');
+				}
+				let x = faceAttributes[index]["euler_angle"][0];
+				let y = faceAttributes[index]["euler_angle"][1];
+				let z = faceAttributes[index]["euler_angle"][2];
+				$(".box").css("transform","rotateX("+x+"deg) rotateY("+y+"deg) rotateZ("+z+"deg) scale3d(0.3,0.3,0.3)");
+				$("#attribute>table>tr").prepend("<td>头部姿态:</td>");
+				$("#attribute>table").append("<tr><td style='font-weight: 100;'>欧拉角:</td><td>[<span>"+x+"</span>,<span>"+y+"</span>,<span>"+z+"</span>]</td></tr>");
+			}
+			$("#attribute>table").append("<tr><td>年龄:</td><td>"+faceAttributes[index]["age"]+"</td></tr>");
+			switch (faceAttributes[index]["gender"]){
+				case 0:
+					$("#attribute>table").append("<tr><td>性别:</td><td style='color: deepskyblue;'>男</td></tr>");
+					break;
+				case 1:
+					$("#attribute>table").append("<tr><td>性别:</td><td style='color: deeppink;'>女</td></tr>");
+					break;
+				case -1:
+					break;
+				default:
+					break;
+			}
+			
+		}
+		function ClearPanel() {
+			$('#elementPanel>.pgwSlideshow').remove();
+			$("#jsonPanel > pre").empty();
+			$("#attribute").empty();
+		}
+	</script>
+	<script>
+		var initialSign = true;
+		var respondedJson;
+		function ChangeImage(index) {
+		    if (uploadSign == true) {
+		        uploadSign = false;
+		        return;
+		    }
+		    if (initialSign == true) {
+		        initialSign = false;
+		    }
+		    else if (slideData.getCurrentSlide() == slideData.getSlideCount() - 1) {
+		        if (respondedJson == null) {
+		            ClearPanel();
+		            return;
+		        }
+		        ShowResult(respondedJson);
+		        return;
+		    }
+		    var fileRoutes = $("#img").attr("src").split("/");
+		    if (fileRoutes.length - 1 < 0) {
+		        return;
+		    }
+		    GetJson(fileRoutes[fileRoutes.length-1]);
+		}
+		function SelectElement(index){
+			$("#attribute").empty();
+			if(index==1){
+				if(faces.length<1){
+					$("#attribute").append("<a>未检测到人脸，请查询错误代码</a>");
+					return;
+				}
+				$("#attribute").append("<a>已检测到人脸: </a>");
+				$("#attribute").append('<a style=color:#09F>'+faces.length+'</a><br /><br /><a>点击上方人脸图片即可查看属性</a>');
+				$(".rect").css("display","block");
+			}
+			else{
+				$(".rect").css("display","none");
+				$(faces[index-2]).css("display","block");
+				ShowSingleResult(index-2);
+			}
+			
+		}
+		function CutImage(image,x,y,w,h){
+			var canvas = document.createElement("canvas");
+			canvas.width = w;
+			canvas.height = h;
+			canvas.getContext("2d").drawImage(image,x,y,w,h,0,0,w,h);
+			var image = new Image();
+			image.src = canvas.toDataURL("image/png");
+			return image;
+		}
+	</script>
+</body>
+</html>

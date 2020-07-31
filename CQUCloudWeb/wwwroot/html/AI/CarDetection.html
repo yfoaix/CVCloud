@@ -1,0 +1,504 @@
+﻿<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+    <link rel="stylesheet" type="text/css" href="/css/AI/pgwslideshow.css">
+    <link rel="stylesheet" type="text/css" href="/css/AI/tabblock.css">
+    <link rel="stylesheet" type="text/css" href="/css/AI/formatjson.css">
+	<link rel="stylesheet" type="text/css" href="/css/AI/honeySwitch.css">
+	<style>
+		.rect{
+			left: -1000px;
+			position: absolute;
+			top: -1000px;
+			z-index: 2;
+		}
+		.rect{
+		  border: 2px solid lawngreen;
+		}
+		video{
+			z-index: 1;
+		}
+		.markcontainer{
+			position: absolute;
+		}
+		.loadingSpinner {
+			animation: spinnerFrame 1s linear infinite;
+			border: solid 1.5em #F90;
+			border-right: solid 1.5em transparent;
+			border-left: solid 1.5em transparent;
+			background-color: #333;
+			border-radius: 100%;
+			width: 0;
+			height: 0;
+			z-index: 2;
+		}
+		@keyframes spinnerFrame {
+			0% {
+				transform: rotate(0deg);
+			}
+
+			50% {
+				transform: rotate(60deg)
+			}
+
+			100% {
+				transform: rotate(360deg);
+			}
+		}
+		.buttoncontainer{
+			width: 5px;
+			height: 5px;
+			border: solid 1.5em #000000;
+			border-radius: 100%;
+			
+		}
+		button{
+		    padding: 0;
+		    background-color: #000;
+			position: absolute;
+			top: 12px;
+			left: 12px;
+			outline: 0;
+		}
+		button :focus{outline:0;}
+		#controlTable span{
+			margin-top: 10px;
+			zoom: 90%;
+		}
+		#controlTable span span{
+			margin-top: 0px;
+			zoom: 100%;
+		}
+		input[type="range"]{
+			max-width: 100px;
+		}
+		video::-webkit-media-controls-fullscreen-button {
+		    display: none; 
+		}
+		video::-internal-media-controls-download-button {
+		    display:none;
+		}
+	</style>
+	</head>
+	<body>
+		<div style="text-align:center">
+			<div style="margin:0 auto;width:1010px">
+				<div style="width:610px;float:left">
+					<div class="pgwSlideshow wide" style="display: block;">
+						<div class="ps-current" style="padding: 5px 5px 5px 5px; height: 345px;">
+							
+							<div class="markcontainer">
+								<video controlsList='nofullscreen nodownload noremote footbar' id="video" style="" width="600" src="asset/1.mp4" controls="controls" muted="muted">
+								</video>
+							</div>
+						</div>
+						<div class="ps-list" style="height: 60px;">
+						</div>
+					</div>
+				</div>
+				<div style="width:400px;float:left">
+					<div class="tab-block information-tab">
+						<div class="tab-buttons ">
+							<a class="tab-button cur" data-tab="one">分析结果</a>
+							<a class="tab-button" data-tab="two">输出Json</a>
+						</div>
+						<div class="tabs">
+							<div class="tab-item active" id="tab-one" style="height: 325px;">
+								<div class="blackpanel">
+									<div style=" padding:10px 10px 10px 10px; ">
+										<div class="panel" style="height: 40px;">
+											<div>
+												<a>&nbsp;&nbsp;识别到的车辆：</a>
+												<a id="carNum" style="color:#09F">0</a>
+												<a>辆</a>
+											</div>
+										</div>
+										<br/>
+										<div class="panel" style=" height:80%;">
+										   <div style="height: 240px;overflow: scroll;" id="carPanel">
+											    <table id="controlTable" style="border:0; width:100%; text-align:left">
+													<tr>
+														<th></th>
+														<th style="width: 200px;"></th>
+													</tr>
+													<tr>
+														<td>&nbsp;当前帧数：</td>
+														<td><a id="FrameNum" style="color:#09F">0</a></td>
+													</tr>
+													<tr>
+														<td>&nbsp;FPS：</td>
+														<td><a id="FPS" style="color:#09F">0</a></td>
+													</tr>
+													<tr>
+														<td>&nbsp;显示方框</td>
+														<td><span id="showRect" themecolor="orange" class="switch-on"></span></td>
+													</tr>
+													<tr>
+														<td>&nbsp;插值补帧</td>
+														<td>
+															<span id="interpolation" themecolor="orange" class="switch-off"></span>
+															<a style="color: #999999;font-size: 12px;">不推荐在低帧率时开启</a>
+														</td>
+													</tr>
+													<tr id="interpolationNum" style="display: none;">
+														<td>&nbsp;补帧帧数</td>
+														<td>
+															<input type="range" onchange="InterpolationChange(this.id)" min="0" max="3" value = "3" step="1" id="interpolationFrameBar" />
+															<a id="interpolationFrameNum">3</a>
+														</td>
+													</tr>
+													<tr>
+														<td>&nbsp;最低置信度</td>
+														<td>
+															<input type="range" onchange="ConfidenceChange(this.id)" min="0" max="100" value = "50" step="1" id="confidenceBar" />
+															<a id="confidence">50%</a>
+														</td>
+													</tr>
+												</table>
+										   </div>
+										</div>
+									 </div>
+								</div>
+							</div>
+							<div class="tab-item" id="tab-two" style="height: 325px;">
+								<div style=" padding:10px 10px 10px 10px; ">
+									<div class="blackpanel">
+										<div id="jsonPanel" class="panel" style="height: 300px;">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="/lib/jquery/dist/jquery.min.js"></script>
+		<script type="text/javascript" src="/js/AI/formatjson.js"></script>
+		<script type="text/javascript" src="/js/AI/honeySwitch.js"></script>
+		<script type="text/javascript">
+			var container = null;
+			var carNumText = null;
+			var frameNumText = null;
+			var video = null;
+			var FPS = null;
+			var isEnd = false;
+            $(document).ready(function () {
+                GetJson("1");
+                ///////
+                carJSON = eval('(' + jsonstr + ')');
+                ///////
+				$('.tab-button').click(function() {
+				var tab = $(this).data('tab');
+				$(this).addClass('cur').siblings('.tab-button').removeClass('cur');
+				$('#tab-' + tab + '').addClass('active').siblings('.tab-item').removeClass('active');
+				});
+				$('.tab-button').click(function(){
+					$("#jsonPanel > pre").empty();
+					if($('.cur').attr("data-tab")=="two"){
+                        Process(jsonstr, 'jsonPanel');
+                        $(".CodeContainer").css("height","300px");
+					}
+				});
+				///////
+				InitialShowRectSwitch("#showRect");
+				InitialInterpolationSwitch("#interpolation");
+				carNumText = document.getElementById("carNum");
+				frameNumText = document.getElementById("FrameNum");
+				video = document.getElementById("video");
+				FPS = document.getElementById("FPS");
+				///////
+				video['disablePictureInPicture'] = true;
+				video.addEventListener("timeupdate",function(){
+					let currentFrame = parseInt(video.currentTime*30);
+					if(Math.abs(currentFrame-frameNum)>60){
+						frameNum = currentFrame;
+					}
+				});
+				video.addEventListener("play",function(){
+					Play();
+				});
+				video.addEventListener("pause",function(){
+					Pause();
+				});
+				video.onended = function(){
+					isPlaying = false;
+					isEnd = true;
+					firstPlaying = false;
+					frameNum = 0;
+					$(".pause").attr("class","play");
+					RemoveRects();
+				};
+				//Process(jsonstr, 'jsonPanel');
+				scale = 1.2;
+				container = document.getElementsByClassName("markcontainer");
+			});
+		</script>
+        <script>
+            function GetJson(name) {
+                const getURI = "/api/CarDetection/";
+                $.ajax({
+                    url: getURI + name,
+                    type: 'GET',
+                    async: false,
+                    cache: true,
+                    success: function (json) {
+                        jsonstr = json;
+                    },
+                    error: function (msg) {
+                        console.log(msg);
+                    }
+                });
+            }
+        </script>
+		<script>
+			//carPanel
+			var selectedConfidence = 50;
+			function ConfidenceChange(id){
+				selectedConfidence = document.getElementById(id).value;
+				document.getElementById("confidence").innerText = selectedConfidence+"%";
+			}
+			function InterpolationChange(id){
+				interpolationConfidence = document.getElementById(id).value;
+				MaxEmptyFrameNum = interpolationConfidence +1;
+				document.getElementById("interpolationFrameNum").innerText = interpolationConfidence;
+			}
+			function InitialShowRectSwitch(sector){
+				switchEvent(sector,function(){
+					showRect = true;
+					$(".markcontainer>.rect").css("display","");
+				},
+				function(){
+					showRect = false;
+					$(".markcontainer>.rect").css("display","none");
+				});
+			}
+			function InitialInterpolationSwitch(sector){
+				switchEvent(sector,function(){
+					$("#interpolationNum").slideDown();
+					interpolation = true;
+					cars.splice(0,cars.length);
+					carNum = 0;
+					RemoveRects();
+				},
+				function(){		
+					$("#interpolationNum").slideUp();
+					interpolation = false;
+					cars.splice(0,cars.length);
+					carNum = 0;
+					RemoveRects();
+					
+				});
+			}
+		</script>
+		<script>
+			//videoControllers
+			var isPlaying = false;
+			var firstPlaying = false;
+
+			function Play(){
+				isPlaying = true;
+				isEnd = false;
+				StartDetect();
+			}
+			function Pause(){
+				isPlaying = false;
+			}
+		</script>
+		<script>
+			let frameNum = 0;
+			var scale = 1.0;
+			let MaxEmptyFrameNum = 4;
+            let jsonstr = '';
+            var carJSON = null;
+			let cars = new Array();
+			var carNum = 0;
+			var interpolation = false;
+			var showRect = true;
+			var allFrameCount = 0;
+			let time = 0;
+			function StartDetect(){
+				if(isPlaying == false){
+					return;
+                }
+                if (carJSON.error_msg != null) {
+                    return;
+                }
+				++allFrameCount;
+				let timeNow = new Date().getSeconds();
+				if(timeNow!=time){
+					time = timeNow;
+					FPS.innerText = allFrameCount;
+					if(allFrameCount>40){
+						$("#interpolation").removeClass("switch-disabled");
+					}
+					else{
+						if(interpolation==true){
+							$("#interpolation")[0].click();
+							$("#interpolation").addClass("switch-disabled");
+						}
+					}
+					allFrameCount = 0;
+				}
+				
+				if(video.currentTime*30<frameNum){
+
+					
+					window.requestAnimationFrame(StartDetect);
+				 	return;
+				}
+
+				//video.pause();
+				if(interpolation){
+					Track(frameNum);
+				}
+				else{
+					LowTrack(frameNum);
+				}
+				carNumText.innerText = carNum;
+				frameNumText.innerText = frameNum;
+				frameNum+=1;
+				if(!isEnd){
+					//video.play();
+				}
+				
+				window.requestAnimationFrame(StartDetect);
+			}
+				
+			function LowTrack(num){
+				RemoveRects();
+				let framestr = num.toString();
+				let frame = carJSON[framestr];
+				if(frame ==undefined ){
+					return;
+				}
+				carNum = 0;
+				for(let index in carJSON[framestr]){
+					if(carJSON[framestr][index]["confidence"]<selectedConfidence)
+						continue;
+					++carNum;
+					LowShowRect(carJSON[framestr][index]["rect"][0],carJSON[framestr][index]["rect"][1],carJSON[framestr][index]["rect"][2],carJSON[framestr][index]["rect"][3]);
+				}
+			}
+			function LowShowRect(x1,y1,x2,y2){
+				let width = scale*(x2-x1);
+				let height = scale*(y2-y1);
+				x1*=scale;
+				y1*=scale;
+				if(!showRect)
+					$(container).append("<div class='rect' style='left:"+x1+"px;top:"+y1+"px;width:"+width+"px;height:"+height+"px;display:none'></div>");
+				else
+					$(container).append("<div class='rect' style='left:"+x1+"px;top:"+y1+"px;width:"+width+"px;height:"+height+"px;'></div>");
+			}
+			function Track(num){
+				let framestr = num.toString();
+				let frame = carJSON[framestr];
+				if(frame ==undefined ){
+					for(let i = cars.length-1;i>=0;--i){
+						cars[i].emptyFrameCount+=1;
+						if(cars[i].emptyFrameCount>MaxEmptyFrameNum){
+							$(cars[i].rect).remove();
+							cars.splice(i,1);
+						}
+					}
+					return;
+				}
+				for(let index in carJSON[framestr]){
+					if(carJSON[framestr][index]["confidence"]<selectedConfidence)
+						continue;
+						
+					ShowRect(carJSON[framestr][index]["rect"][0],carJSON[framestr][index]["rect"][1],carJSON[framestr][index]["rect"][2],carJSON[framestr][index]["rect"][3]);
+				}
+				for(let i = cars.length-1;i>=0;--i){
+					if(cars[i].isShown==false){
+						cars[i].emptyFrameCount+=1;
+						if(cars[i].emptyFrameCount>MaxEmptyFrameNum){
+							$(cars[i].rect).remove();
+							cars.splice(i,1);
+						}
+					}
+					else{
+						cars[i].emptyFrameCount = 0;
+						cars[i].isShown = false;
+					}
+				}
+				carNum = cars.length;
+			}
+			function RemoveRects(){
+				$(".markcontainer > .rect").remove();
+			}
+			function ShowRect(x1,y1,x2,y2){
+				let width = scale*(x2-x1);
+				let height = scale*(y2-y1);
+				x1*=scale;
+				y1*=scale;
+				let midX = x1+width/2;
+				let midY = y1+height/2;
+				if(cars.length<1){
+					CreateCar(x1,y1,width,height);
+				}
+				let dx = 0;
+				let dy = 0;
+				let firstSign = true;
+				let minD = 0;
+				let distance = 0;
+				let carIndex = 0;
+				for(let i = 0;i<cars.length;++i){
+					dx = cars[i].x - midX;
+					dy = cars[i].y - midY;
+					distance = dx*dx+dy*dy;
+					if(firstSign){
+						firstSign = false;
+						minD = distance;
+						carIndex = i;
+						continue;
+					}
+					if(distance<minD){
+						minD = distance;
+						carIndex = i;
+					}
+				}
+				if(minD>400){
+					CreateCar(midX,midY,x1,y1,width,height);
+				}
+				else{
+					
+					MoveCar(midX,midY,x1,y1,width,height,carIndex);
+				}
+			}
+			
+			function DrawRect(x,y,width,height){
+				let element = document.createElement("div");
+				element.classList.add("rect");
+				element.style.left = x+"px";
+				element.style.top = y+"px";
+				element.style.width = width+"px";
+				element.style.height = height+"px";
+				if(!showRect){
+					element.style.display = "none";
+				}
+				$(container).append(element);
+				return element;
+			}
+			function MoveCar(x,y,left,top,width,height,carIndex){
+				$(cars[carIndex].rect).animate({left:left+"px",top:top+"px",width:width+"px",height:height+"px"},10);
+				cars[carIndex].x = x;
+				cars[carIndex].y = y;
+				cars[carIndex].isShown = true;
+			}
+			function CreateCar(x,y,left,top,width,height){
+
+				var car = {
+					x:x,
+					y:y,
+					isShown:true,
+					emptyFrameCount:0,
+					rect:DrawRect(left,top,width,height)
+				};
+				cars.push(car);
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>ImageEnhance</title>
+<link rel="stylesheet" type="text/css" href="/css/AI/volumeslicer/volumeslicer.css" media="screen" />
+    <style>
+        #toolbox{
+            display:none;
+
+        }
+        #ba_images div div img{height:540px;width:810px;}
+        #ext_before img{
+        }
+    </style>
+</head>
+<body>
+    <div id="example" class="beforeafter_slider shadow1">
+        <ul>
+        </ul>
+    </div>
+<script type="text/javascript" src="/js/AI/volumeslicer/jquery.out.js"></script>
+<script type="text/javascript" src="/js/AI/volumeslicer/volumeslicer.js"></script>
+<script type="text/javascript">
+</script>
+<script type="text/javascript">
+$(function(){
+	var ul = $('#example > ul');
+    ul.append('<li><img src="asset/ImageEnhance/before1.jpg" alt="asset/ImageEnhance/after1.jpg"/></li>');
+	jQuery('#example').beforeAfter_slider({
+		width:810,
+		height:540,
+		banner_bordersize:12,
+		start_from:'right',
+		start_pos:405,
+		follow:true
+    });
+});
+</script>
+</body>
+</html>
