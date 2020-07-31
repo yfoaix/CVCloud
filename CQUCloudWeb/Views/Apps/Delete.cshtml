@@ -1,0 +1,74 @@
+﻿@model CQUCloudWeb.Models.App
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>删除应用</h2>
+
+<h3>确认是否删除该应用</h3>
+<div>
+    <h4>App</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AppName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AppName)
+        </dd>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserNameID)
+        </dd>
+        <dt>
+            算法名
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AlgorithmName)
+        </dd>
+        <dt>
+            API ID
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AlgorithmRefId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.APIKey)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.APIKey)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CreateTime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LastCallTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LastCallTime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MonthCallCount)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MonthCallCount)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.State)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.State)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="AppId" />
+        <input type="submit" value="删除" class="btn btn-default" /> |
+        <a asp-action="Index">返回列表</a>
+    </form>
+</div>

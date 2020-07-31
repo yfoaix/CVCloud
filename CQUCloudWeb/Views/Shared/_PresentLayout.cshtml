@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="keywords" content="云计算, 人工智能,大数据, 图像识别">
+    <meta name="description" content="">
+    <meta name="author" content="xiaoFy">
+    <title>@ViewData["Title"] - 重庆大学智能产业共性技术及产品研发平台</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/layout.css">
+    <link rel="stylesheet" href="~/css/slideside.css">
+    <link rel="stylesheet" href="~/css/boxicons.min.css">
+    @RenderSection("Styles", required: false)
+</head>
+<body>
+    <partial name="../Partial/_Header" />
+    <partial name="../Partial/_SideBar" />
+    <div style="height:50px"></div>
+    @RenderBody()
+    <partial name="../Partial/_Footer" />
+    <partial name="../Partial/_CookieConsentPartial" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/js/hc-mobile-nav.js"></script>
+    <script>
+        (function ($) {
+            var $nav = $('#main-nav');
+            var $toggle = $('.toggle');
+            var defaultData = {
+                maxWidth: false,
+                customToggle: $toggle,
+                navTitle: '目录',
+                levelTitles: true,
+                offCanvas:true,
+			    levelOpen:'overlap',
+			    disableBody:false,
+                closeOnClick: false
+            };
+            // we'll store our temp stuff here
+            var $clone = null;
+            var data = {};
+            // calling like this only for slideside purposes
+            const initNav = function (conf) {
+                if ($clone) {
+                    // clear previous instance
+                    $clone.remove();
+                }
+                // remove old toggle click event
+                $toggle.off('click');
+                // make new copy
+                $clone = $nav.clone();
+                // remember data
+                $.extend(data, conf)
+                // call the plugin
+                $clone.hcMobileNav($.extend({}, defaultData, data));
+            }
+            // run first slideside
+            initNav({});
+        })(jQuery);
+    </script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

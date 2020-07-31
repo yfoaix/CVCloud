@@ -1,0 +1,164 @@
+﻿@{
+    ViewData["Title"] = "Home page";
+    Layout = "/Views/Shared/_OverLayout.cshtml";
+}
+<!-- banner begin -->
+<section id="banner">
+    <div id="banner_tabs" class="flexslider">
+        <ul class="slides">
+            <li class="active">
+                <a title="" href="#">
+                    <img width="1920" height="482" alt="" style="background: url(../images/banner1.jpg) no-repeat center; background-size:cover;" src="~/images/alpha.png">
+                </a>
+            </li>
+            <li>
+                <a title="" href="#">
+                    <img width="1920" height="482" alt="" style="background: url(../images/banner1.jpg) no-repeat center; background-size:cover;" src="~/images/alpha.png">
+                </a>
+            </li>
+            <li>
+                <a title="" href="#">
+                    <img width="1920" height="482" alt="" style="background: url(../images/banner1.jpg) no-repeat center; background-size:cover;" src="~/images/alpha.png">
+                </a>
+            </li>
+        </ul>
+        <ol id="bannerCtrl" class="flex-control-nav flex-control-paging">
+            <li><a>1</a></li>
+            <li><a>2</a></li>
+            <li><a>3</a></li>
+        </ol>
+    </div>
+</section>
+<!-- banner end -->
+<section style="padding-top:50px" id="web">
+    <div class="firstBox-title">
+        <h1>智能产业共性技术</h1>
+        <br />
+        <br />
+        <p>智能算法应用</p>
+        <br />
+    </div>
+    <div class="web clearfix">
+        <div style="padding-left: 50px;" class="con clearfix">
+            <ul>
+                <li onclick="window.location.href='/AI/FaceDetection';">
+                    <img src="/images/face.jpg">
+                    <div class="txt" style="height: 45px;">
+                        <h3 style="padding-top: 0px;">人脸检测</h3>
+                        <p></p>
+                    </div>
+                </li>
+                <li onclick="window.location.href='/AI/PedestrianDetection';">
+                    <img src="/images/pedestrian.jpg">
+                    <div class="txt" style="height: 45px;">
+                        <h3 style="padding-top: 0px;">行人检测</h3>
+                        <p>YOLOv3</p>
+                    </div>
+                </li>
+                <li onclick="window.location.href='/AI/ImageSegmentation';" >
+                    <img src="/images/volume.jpg">
+                    <div class="txt" style="height: 45px;">
+                        <h3 style="padding-top: 0px;">语义分割</h3>
+                        <p>多尺度U-Net网络</p>
+                    </div>
+                </li>
+                <li onclick="window.location.href='/AI/CarDetection';">
+                    <img src="/images/class4.jpg">
+                    <div class="txt" style="height: 45px;">
+                        <h3 style="padding-top: 0px;">车辆检测</h3>
+                        <p>单次多盒检测</p>
+                    </div>
+                </li>
+                <li onclick="window.location.href='/AI/ImageEnhance';">
+                    <img src="/images/before2.jpg">
+                    <div class="txt" style="height: 45px;">
+                        <h3 style="padding-top: 0px;">图像增强</h3>
+                        <p>基于多尺度的图像细节提升</p>
+                    </div>
+                </li>
+                <li onclick="window.location.href='/AI/AttributePrediction';">
+                    <img src="/images/AttributePrediction.jpg">
+                    <div class="txt" style="height: 45px;">
+                        <h3 style="padding-top: 0px;">属性预测</h3>
+                        <p>超图正则化属性预测</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="second-box">
+        <div class="container">
+            <div class="firstBox-title">
+                <h1 style="color:black">研发平台</h1>
+                <p style="color:black">研发平台</p>
+            </div>
+            <div class="second-info">
+                <div class="second-info-fl">
+                    <div class="info-fl-top">
+                        <h3>Paas级平台</h3>
+                        <p>用户可在规定权限内，任意部署算法。</p>
+                    </div>
+                    <div class="info-fl-top">
+                        <h3>快速搭建生产环境</h3>
+                        <p>一键部署上万种 Docker 容器化应用快速部署 根据业务需求提供。</p>
+                    </div>
+                    <div class="info-fl-top">
+                        <h3>先进的自动运维</h3>
+                        <p>以应用为核心，提供特定功能，满足应用的快速发布、弹性扩展。</p>
+                    </div>
+                </div>
+                <div class="second-info-ce"><a href="~/algorithms/index"><img src="/images/icon-edn.png" alt=""></a> </div>
+                <div class="second-info-fr">
+                    <div class="info-fl-top">
+                        <h3>多环境支持</h3>
+                        <p>集成常用人工智能算法环境，包括OpenCV、caffe、pytorch、tensorflow等。</p>
+                    </div>
+                    <div class="info-fl-top">
+                        <h3>流量体验依然顺畅</h3>
+                        <p>以分布式结构搭建，智能运维，弹性扩展。</p>
+                    </div>
+                    <div class="info-fl-top">
+                        <h3>持续集成环境</h3>
+                        <p>用户一键上传部署，后续更改也方便。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts
+    {
+    <script src="~/js/slider.js"></script>
+    <script type="text/javascript">
+
+	    $(function () {
+            var bannerSlider = new Slider($('#banner_tabs'), {
+                time: 5000,
+                delay: 400,
+                event: 'hover',
+                auto: true,
+                mode: 'fade',
+                controller: $('#bannerCtrl'),
+                activeControllerCls: 'active'
+            });
+            $('#banner_tabs .flex-prev').click(function () {
+                bannerSlider.prev()
+            });
+            $('#banner_tabs .flex-next').click(function () {
+                bannerSlider.next()
+            });
+        }
+        );
+	    // 服务行业内容 切换
+        $(".con ul li").hover(function () {
+            $(this).find(".txt").stop().animate({ height: "198px" }, 400);
+            $(this).find(".txt h3").stop().animate({ paddingTop: "60px" }, 400);
+        }, function () {
+            $(this).find(".txt").stop().animate({ height: "45px" }, 400);
+            $(this).find(".txt h3").stop().animate({ paddingTop: "0px" }, 400);
+        });
+	
+    </script>
+}

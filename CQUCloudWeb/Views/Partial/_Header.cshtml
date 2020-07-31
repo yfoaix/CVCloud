@@ -1,0 +1,88 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<nav class="navbar navbar-inverse navbar-fixed-top clearfix">
+    
+    <div class="container header_nav">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a asp-area="" asp-controller="Home" asp-action="Index"><img height="50" src="~/images/logo.png" alt="" /></a>
+        </div>
+
+        <div class="nav navbar-collapse collapse">
+            <ul id="header_fade1" class="navbar_nav" data-in="fadeInDown" data-out="fadeOutUp">
+                <li>
+                    <a asp-area="" asp-controller="Home" asp-action="Index">智能产业共性技术及产品研发平台</a>
+                </li>
+            </ul>
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="identity">
+                    <ul class="navbar_nav">
+                        <li>
+                            <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+                        </li>
+                        <li>
+                            <button style="margin:0 0 0 0;padding:0 0 0 0;height:24px;border:0 0 0 0" type="submit" class="btn btn-link navbar-btn navbar-link" onclick="PasteButtonName()">注销</button>
+                        </li>
+                    </ul>
+                </form>
+            }
+            else
+            {
+                <ul class="navbar_nav identity">
+                    <li><a asp-area="Identity" asp-page="/Account/Register">注册</a></li>
+                    <li><a asp-area="Identity" asp-page="/Account/Login">登录</a></li>
+                </ul>
+            }
+            <ul id="header_fade2" class="navbar_nav" data-in="fadeInDown" data-out="fadeOutUp">
+                <li class="dropdown">
+                    <a href="~/AI/Index">共性技术</a>
+                    <div class="dropdown_menu">
+                        <a href="~/AI/FaceDetection">人脸检测</a>
+                        <a href="~/AI/PedestrianDetection">行人检测</a>
+                        <a href="~/AI/CarDetection">车辆检测</a>
+                        <a href="~/AI/AttributePrediction">动物属性预测</a>
+                        <a href="~/AI/ImageSegmentation">医学语义分割</a>
+                        <a href="~/AI/ImageEnhance">图像增强</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="~/Paas/Index">PaaS平台</a>
+                    <div class="dropdown_menu">
+                        <a href="~/apps/CreateAPI">生成APIKey</a>
+                        <a href="~/apps/index">应用管理</a>
+                        <a href="~/algorithms/index">查找算法</a>
+                        <a href="~/algorithms/mine">我的算法</a>
+                        <a href="~/algorithms/create">上传算法</a>
+                        <a href="~/doc/api">接入指南</a>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#">开发资源</a>
+                    <div class="dropdown_menu">
+                        <a href="~/doc/index">帮助文档</a>
+                        <a href="~/Doc/SDK">下载SDK</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div
+     class="toggle"
+     style="
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 160%;
+    width: 2%;
+    z-index:80;
+"></div>

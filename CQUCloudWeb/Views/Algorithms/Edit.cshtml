@@ -1,0 +1,75 @@
+﻿@model CQUCloudWeb.Models.Algorithm
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>修改算法</h2>
+
+<h4>Edit Algorithm</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="AlgorithmId" />
+            <div class="form-group">
+                <label asp-for="AlgorithmName" class="control-label"></label>
+                <input asp-for="AlgorithmName" class="form-control" />
+                <span asp-validation-for="AlgorithmName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserNameID" class="control-label"></label>
+                <input disabled="disabled" asp-for="UserNameID" class="form-control" />
+                <span asp-validation-for="UserNameID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CreateTime" class="control-label"></label>
+                <input disabled="disabled" asp-for="CreateTime" class="form-control" />
+                <span asp-validation-for="CreateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input disabled="disabled" asp-for="State" /> @Html.DisplayNameFor(model => model.State)
+                    </label>
+                    请等待管理员审核
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="DisplayType" class="control-label"></label>
+                <select asp-for="DisplayType" class="form-control"></select>
+                <span asp-validation-for="DisplayType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EnvironmentType" class="control-label"></label>
+                <select asp-for="EnvironmentType" class="form-control"></select>
+                <span asp-validation-for="EnvironmentType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CodeFile" class="control-label"></label>
+                <input type="file" asp-for="CodeFile" class="form-control" />
+                <span asp-validation-for="CodeFile" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContainerID" class="control-label"></label>
+                <input disabled="disabled" asp-for="ContainerID" class="form-control" />
+                <span asp-validation-for="ContainerID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="保存" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">返回列表</a>
+</div>
+

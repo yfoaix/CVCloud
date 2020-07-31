@@ -1,0 +1,51 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_PresentLayout.cshtml";
+}
+
+@RenderBody()
+    <section style="min-height:400px" id="services" class="services">
+        <div style="padding-bottom:10%;padding-top:10%;padding-left:20%;padding-right:20%">
+            <div class="row">
+
+                <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
+                    <div class="icon-box">
+                        <div class="icon"><i class="bx bx-file"></i></div>
+                        <h4 class="title"><a href="">API文档</a></h4>
+                        <p class="description">调用接口与参数</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
+                    <div class="icon-box">
+                        <div class="icon"><i class="bx bx-cloud"></i></div>
+                        <h4 class="title"><a href="~/apps/index">调用算法</a></h4>
+                        <p class="description">创建应用，生成API Key</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 d-flex align-items-stretch mb-5 mb-lg-0">
+                    <div class="icon-box">
+                        <div class="icon"><i class="bx bx-download"></i></div>
+                        <h4 class="title"><a href="~/doc/SDK">下载SDK</a></h4>
+                        <p class="description">下载算法SDK Demo</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+@section Scripts{
+    <script>
+        //function setIframeHeight(iframe) {
+        //    if (iframe) {
+        //        var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
+        //        if (iframeWin.document.body) {
+        //            iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
+        //        }
+        //    }
+        //};
+
+        //window.onload = function () {
+        //    setIframeHeight(document.getElementsByClassName("aiframe")[0]);
+        //};
+    </script>
+}

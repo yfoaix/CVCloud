@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.757
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CQUCloudWeb", "CQUCloudWeb\CQUCloudWeb.csproj", "{D9B485E6-4584-4F37-862E-501FB1C78A86}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D9B485E6-4584-4F37-862E-501FB1C78A86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9B485E6-4584-4F37-862E-501FB1C78A86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9B485E6-4584-4F37-862E-501FB1C78A86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9B485E6-4584-4F37-862E-501FB1C78A86}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F0A73440-5257-4983-80FA-079A0894018C}
+	EndGlobalSection
+EndGlobal

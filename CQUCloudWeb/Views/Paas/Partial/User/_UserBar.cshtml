@@ -1,0 +1,28 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@if (SignInManager.IsSignedIn(User))
+{
+    <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Paas", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
+        <ul class="navbar-nav navbar-right">
+            <li class="dropdown dropdown-list-toggle">
+                <partial name="Partial/User/_Message" />
+            </li>
+            <li class="dropdown dropdown-list-toggle">
+                <partial name="Partial/User/_Notification" />
+            </li>
+            <li class="dropdown">
+                <partial name="Partial/User/_Identity" />
+            </li>
+        </ul>
+    </form>
+}
+else
+{
+    <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user"><span style="padding-top:10px;color:black" class="d-sm-none d-lg-inline-block">请先登录</span></a>
+    <ul class="navbar-nav navbar-right">
+        <li class="dropdown">
+            <partial name="Partial/User/_Identity" />
+        </li>
+    </ul>
+}

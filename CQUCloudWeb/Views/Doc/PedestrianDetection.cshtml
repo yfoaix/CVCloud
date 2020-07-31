@@ -1,0 +1,133 @@
+﻿
+@{
+    ViewData["Title"] = "Document";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+    <div style="min-height:600px;padding-left:10%;padding-right:10%">
+        <h1>
+            API 文档
+        </h1>
+        <br />
+        <br />
+        <h4>
+            (鼠标移至最左侧打开目录)
+        </h4>
+        <br />
+        <br />
+        <a href="~/doc/API">算法调用方法</a>
+        <br />
+        <br />
+        <h1>行人检测 API</h1>
+        <br />
+        <br />
+        <h3>
+            描述
+        </h3>
+        <p>传入图片进行行人检测。</p>
+        <p>可以检测图片内所有行人，提供行人在屏幕坐标的位置。</p>
+        <h3>
+            图片要求
+        </h3>
+        <p>图片格式:JPG(JPEG)，PNG</p>
+        <p>图片文件大小:小于2MB</p>
+
+
+        <h3>版本</h3>
+        <p>
+            1.0
+        </p>
+        <h3>调用URL</h3>
+        <p>http://cqucloud.vip.qydev.com/api/PedestrianDetection</p>
+        <h3>调用方法</h3>
+        <p>Http POST</p>
+        <h3>请求体格式</h3>
+        <p>multipart/form-data (key可任意设定)</p>
+        <h3>请求参数</h3>
+        <table class="table">
+            <caption>请求参数</caption>
+            <thead>
+                <tr>
+                    <th>参数名</th>
+                    <th>类型</th>
+                    <th>参数说明</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>api_key</td>
+                    <td>String</td>
+                    <td>调用此API的API Key</td>
+
+                </tr>
+                <tr>
+                    <td>image_file</td>
+                    <td>File</td>
+                    <td>一个图片，二进制文件，需要用post multipart/form-data的方式上传。</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>返回值说明</h3>
+        <table class="table">
+            <caption>返回值说明</caption>
+            <thead>
+                <tr>
+                    <th>字段</th>
+                    <th>类型</th>
+                    <th>说明</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>used_ticks</td>
+                    <td>Long Int</td>
+                    <td>本次调用所花费时间Tick</td>
+                </tr>
+                <tr>
+                    <td>pedistrian_num</td>
+                    <td>Int</td>
+                    <td>检测到行人数</td>
+                </tr>
+                <tr>
+                    <td>pedistrians</td>
+                    <td>Array</td>
+                    <td>检测到的行人属性数组</td>
+                </tr>
+                <tr>
+                    <td>rect</td>
+                    <td>Int Array</td>
+                    <td>行人在屏幕坐标的位置，数组内依次为[left,top,right,bottom]</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>返回值示例</h3>
+        <h4>请求成功返回示例</h4>
+        <pre class="CodeContainer" style="height: 302px;"><span class="ObjectBrace">{</span>
+        <span class="PropertyName">"used_ticks"</span>: <span class="Number">13821844<span class="Comma">,</span> </span>
+        <span class="PropertyName">"pedistrian_num"</span>: <span class="Number">2<span class="Comma">,</span> </span>
+        <span class="PropertyName">"pedistrians"</span>: <span class="ArrayBrace">[</span>
+        <span class="ObjectBrace">{</span>
+        <span class="PropertyName">"rect"</span>: <span class="ArrayBrace">[</span>
+        <span class="Number">305<span class="Comma">,</span> </span>
+        <span class="Number">128<span class="Comma">,</span> </span>
+        <span class="Number">519<span class="Comma">,</span> </span>
+        <span class="Number">556</span>
+        <span class="ArrayBrace">]</span>
+        <span class="ObjectBrace">}</span><span class="Comma">,</span> 
+        <span class="ObjectBrace">{</span>
+        <span class="PropertyName">"rect"</span>: <span class="ArrayBrace">[</span>
+        <span class="Number">504<span class="Comma">,</span> </span>
+        <span class="Number">64<span class="Comma">,</span> </span>
+        <span class="Number">747<span class="Comma">,</span> </span>
+        <span class="Number">550</span>
+        <span class="ArrayBrace">]</span>
+        <span class="ObjectBrace">}</span>
+        <span class="ArrayBrace">]</span>
+<span class="ObjectBrace">}</span>
+</pre>
+        <br />
+
+        <br />
+
+        <br />
+
+    </div>

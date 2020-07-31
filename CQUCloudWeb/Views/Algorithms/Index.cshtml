@@ -1,0 +1,75 @@
+﻿@model IEnumerable<CQUCloudWeb.Models.Algorithm>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+}
+
+<h2>所有算法</h2>
+
+<p>
+    <a asp-action="Mine">我的算法</a>
+    <br />
+    <a asp-action="Create">上传新算法</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AlgorithmName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserNameID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastCallTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MonthCallCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.State)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AlgorithmName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserNameID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastCallTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MonthCallCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.State)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.AlgorithmId">查看</a> |
+                <a asp-controller="Apps" asp-action="Create" asp-route-id="@item.AlgorithmId">创建应用</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

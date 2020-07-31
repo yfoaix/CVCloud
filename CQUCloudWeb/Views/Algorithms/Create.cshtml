@@ -1,0 +1,66 @@
+﻿@model CQUCloudWeb.Models.Algorithm
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>上传算法</h2>
+
+<h4>Create Algorithm</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        @{
+            bool isCreatable = true;
+            if (ViewData["Creatable"]!=null)
+            {
+                isCreatable = (bool)ViewData["Creatable"];
+            }
+            if (isCreatable == true)
+            {
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="AlgorithmName" class="control-label"></label>
+                        <input asp-for="AlgorithmName" class="form-control" />
+                        <span asp-validation-for="AlgorithmName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label"></label>
+                        <input asp-for="Description" class="form-control" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DisplayType" class="control-label"></label>
+                        <select asp-for="DisplayType" asp-items="@Html.GetEnumSelectList(typeof(DisplayType))" class="form-control"></select>
+                        <span asp-validation-for="DisplayType" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EnvironmentType" class="control-label"></label>
+                        <select asp-for="EnvironmentType" asp-items="@Html.GetEnumSelectList(typeof(EnvironmentType))" class="form-control"></select>
+                        <span asp-validation-for="EnvironmentType" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CodeFile" class="control-label"></label>
+                        <input type="file" asp-for="CodeFile" class="form-control" />
+                        <span asp-validation-for="CodeFile" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="创建" class="btn btn-default" />
+                    </div>
+                </form>
+            }
+            else if((bool)ViewData["Creatable"]==false)
+            {
+                <h2>@ViewData["ErrorMsg"].ToString()</h2>
+            }
+        }
+
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">返回列表</a>
+</div>
+

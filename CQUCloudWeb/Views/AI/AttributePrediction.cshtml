@@ -1,0 +1,33 @@
+﻿@{
+    Layout = "/Views/Shared/_AILayout.cshtml";
+}
+<!-- banner begin -->
+<section id="banner">
+    <div id="banner_tabs" class="flexslider">
+        <a title="" href="#">
+            <img width="1920" height="482" alt="" style="background: url(../images/banner/980.jpg) no-repeat center; background-size:cover;" src="~/images/alpha.png">
+        </a>
+    </div>
+</section>
+<!-- banner end -->
+<section style="padding-top:5%;padding-bottom:5%">
+    <h2>
+        动物属性预测
+        超图正则化属性预测器
+    </h2>
+    <h3>Hypergraph regularized Attribute Predictor (HAP)</h3>
+    <br />
+    <br />
+    <p style="padding-left:20%;padding-right:20%">将深度学习与超图学习相结合，通过深度学习对图像的更深层次特征进行提取，弥补了传统特征提取算法的不足之处。从属性预测的角度出发，将超图学习应用到零样本学习问题中，通过实验证实了超图正则化属性分类器在零样本分类任务上的可行性。在AWA（Animal with Attributes）数据集上，属性预测的mAP（mean Average Precision）达到了0.786，零样本分类的准确率达到了0.847。</p>
+
+</section>
+<section style="padding-top:100px; background-color:white; color:#000;min-height:1000px">
+    <br />
+    <h2>功能演示</h2>
+    <br />
+    <br />
+    <div class="aicontainer">
+        <iframe src="~/html/AI/hap.html" scrolling="no" class="aiframe"></iframe>
+
+    </div>
+</section>

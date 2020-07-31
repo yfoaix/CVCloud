@@ -1,0 +1,77 @@
+﻿@model CQUCloudWeb.Models.App
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>查看算法</h2>
+
+<div>
+    <h4>算法应用</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AppName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AppName)
+        </dd>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserNameID)
+        </dd>
+        <dt>
+            算法名
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AlgorithmName)
+        </dd>
+        <dt>
+            API ID
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.AlgorithmRefId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.APIKey)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.APIKey)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CreateTime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LastCallTime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LastCallTime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MonthCallCount)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MonthCallCount)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.State)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.State)
+        </dd>
+        <dt>
+            调用链接
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CallLink)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Delete" asp-route-id="@Model.AppId">删除</a> |
+    <a asp-action="Index">返回列表</a>
+</div>

@@ -1,0 +1,41 @@
+﻿@{
+    Layout = "/Views/Shared/_AILayout.cshtml";
+}
+<!-- banner begin -->
+<section id="banner">
+    <div id="banner_tabs" class="flexslider">
+        <a title="" href="#">
+            <img width="1920" height="482" alt="" style="background: url(../images/banner/timg.jpg) no-repeat center; background-size:cover;" src="~/images/alpha.png">
+        </a>
+    </div>
+</section>
+<!-- banner end -->
+<section style="padding-top:5%;padding-bottom:5%">
+    <h2>
+        医学图像语义分割
+    </h2>
+    <h2>
+        多尺度U-Net网络
+    </h2>
+    <h3></h3>
+    <br />
+    <br />
+    <p style="padding-left:20%;padding-right:20%">
+        基于多尺度U-Net网络的医学图像分割算法，将深度学习与医学图像结合，对医学图像进行语义分割。在相同实验环境下本算法与经典网络V-Net进行对比，在训练速度上提高了近50%，并且本算法的dice值(医学图像常见指标，用于度量图像分割精确度)约为97%。
+    </p>
+
+</section>
+<section style="padding-top:100px; background-color:white; color:#000;min-height:1000px">
+    <br />
+    <h2>功能演示</h2>
+
+    <br />
+    <br />
+    <h4>拖动中间滑块可查看识别部位，点击下方箭头可查看其它切片位置。</h4>
+    <br />
+    <br />
+    <div class="aicontainer">
+        <iframe src="~/html/AI/ImageSegmentation.html" scrolling="no" class="aiframe"></iframe>
+    </div>
+</section>
+

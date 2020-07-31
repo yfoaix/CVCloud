@@ -1,0 +1,43 @@
+﻿@{
+    Layout = "/Views/Shared/_AILayout.cshtml";
+}
+<!-- banner begin -->
+<section id="banner">
+    <div id="banner_tabs" class="flexslider">
+        <a title="" href="#">
+            <img width="1920" height="482" alt="" style="background: url(../images/before2.jpg) no-repeat center; background-size:cover;" src="~/images/alpha.png">
+        </a>
+    </div>
+</section>
+<!-- banner end -->
+<section style="padding-top:5%;padding-bottom:5%">
+    <h2>
+        图像增强
+    </h2>
+    <h2>
+        拉普拉斯算子增强、基于多尺度的图像细节提升
+    </h2>
+    <h3></h3>
+    <br />
+    <br />
+    <p style="padding-left:20%;padding-right:20%">
+        拉普拉斯算子增强：通过定义一个卷积核，将该卷积核与原图像进行卷积操作，来达到锐化增强图像的目的。适用于大部分曝光过低的照片。
+    </p>
+    <p>
+        基于多尺度的图像细节提升：使用了三个尺度的高斯模糊，再和原图做减法，获得不同程度的细节信息，然后通过一定的组合方式把这些细节信息融合到原图中，从而得到加强原图信息的能力。
+    </p>
+</section>
+<section style="padding-top:100px; background-color:white; color:#000;min-height:1000px">
+    <br />
+    <h2>功能演示</h2>
+    
+    <br />
+    <br />
+    <h4>左右拖动中间滑块可对比查看</h4>
+    <div class="aicontainer">
+        <br />
+        <br />
+        <iframe src="~/html/AI/ImageEnhance.html" scrolling="no" class="aiframe"></iframe>
+    </div>
+</section>
+

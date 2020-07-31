@@ -1,0 +1,52 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+    <title>Aegis - Admin Dashboard Template</title>
+    <!-- General CSS Files -->
+    <link rel="stylesheet" href="/css/Paas/app.min.css">
+    <link rel="stylesheet" href="/lib/Paas/jqvmap/dist/jqvmap.min.css">
+    <link rel="stylesheet" href="/lib/Paas/weather-icon/css/weather-icons.min.css">
+    <link rel="stylesheet" href="/lib/Paas/weather-icon/css/weather-icons-wind.min.css">
+    <link rel="stylesheet" href="/lib/Paas/summernote/summernote-bs4.css">
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="/css/Paas/style.css">
+    <link rel="stylesheet" href="/css/Paas/components.css">
+    <!-- Custom style CSS -->
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+</head>
+
+<body class="light light-sidebar theme-white">
+    <div class="loader" style="display: none;"></div>
+    <div id="app">
+        <div class="main-wrapper main-wrapper-1">
+            <partial name="Partial/_NavBar" />
+            <partial name="Partial/_SideBar" />
+            <!-- Main Content -->
+            <div class="main-content" style="min-height: 873px;">
+                @RenderBody()
+                <partial name="Partial/_SettingSideBar" />
+            </div>
+            <partial name="Partial/_Footer" />
+        </div>
+    </div>
+    <!-- General JS Scripts -->
+    <script src="/js/Paas/app.min.js"></script>
+    <!-- JS Libraies -->
+    <script src="/lib/Paas/echart/echarts.js"></script>
+    <script src="/lib/Paas/chartjs/chart.min.js"></script>
+    <!-- Page Specific JS File -->
+    <script src="/js/Paas/page/index.js"></script>
+    <!-- Template JS File -->
+    <script src="/js/Paas/scripts.js"></script>
+    <!-- Custom JS File -->
+    
+    
+    <partial name="Partial/_ScrollBar" />
+</body>
+</html>

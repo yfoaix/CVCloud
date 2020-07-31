@@ -1,0 +1,68 @@
+﻿@model IEnumerable<CQUCloudWeb.Models.App>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+
+}
+
+<h2>算法应用</h2>
+<h4>算法API</h4>
+
+<p>
+    <a asp-action="CreateAPI">创建应用</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AppName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Algorithm)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastCallTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MonthCallCount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.State)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AppName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AlgorithmName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastCallTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MonthCallCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.State)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.AppId">查看API Key</a> |
+                <a asp-action="Delete" asp-route-id="@item.AppId">删除</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

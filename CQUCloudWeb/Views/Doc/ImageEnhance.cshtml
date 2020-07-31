@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewData["Title"] = "Document";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+<div style="min-height:600px;padding-left:10%;padding-right:10%">
+    <h1>
+        API 文档
+    </h1>
+    <br />
+    <br />
+    <h4>
+        (鼠标移至最左侧打开目录)
+    </h4>
+    <br />
+    <br />
+    <a href="~/doc/API">算法调用方法</a>
+    <br />
+    <br />
+    <h1>图像增强 API</h1>
+    <br />
+    <br />
+    <h3>
+        描述
+    </h3>
+    <p>传入图片进行图像增强。</p>
+    <p>可提升传入图片对比度与清晰度。</p>
+    <h3>
+        图片要求
+    </h3>
+    <p>图片格式:JPG(JPEG)，PNG</p>
+    <p>图片文件大小:小于2MB</p>
+
+
+    <h3>版本</h3>
+    <p>
+        1.0
+    </p>
+    <h3>调用URL</h3>
+    <p>http://cqucloud.vip.qydev.com/api/PedestrianDetection</p>
+    <h3>调用方法</h3>
+    <p>Http POST</p>
+    <h3>请求体格式</h3>
+    <p>multipart/form-data (key可任意设定)</p>
+    <h3>请求参数</h3>
+    <table class="table">
+        <caption>请求参数</caption>
+        <thead>
+            <tr>
+                <th>参数名</th>
+                <th>类型</th>
+                <th>参数说明</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>api_key</td>
+                <td>String</td>
+                <td>调用此API的API Key</td>
+
+            </tr>
+            <tr>
+                <td>image_file</td>
+                <td>File</td>
+                <td>一个图片，二进制文件，需要用post multipart/form-data的方式上传。</td>
+            </tr>
+        </tbody>
+    </table>
+    <h3>返回值说明</h3>
+    <table class="table">
+        <caption>返回值说明</caption>
+        <thead>
+            <tr>
+                <th>字段</th>
+                <th>类型</th>
+                <th>说明</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>used_ticks</td>
+                <td>Long Int</td>
+                <td>本次调用所花费时间Tick</td>
+            </tr>
+            <tr>
+                <td>base64</td>
+                <td>String</td>
+                <td>Base64编码的图片，经过解析即可获得处理后的图片</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br />
+
+    <br />
+
+    <br />
+
+</div>

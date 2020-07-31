@@ -1,0 +1,34 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+<a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user"> <img alt="image" src="assets/img/user.png" class="user-img-radious-style"> <span class="d-sm-none d-lg-inline-block"></span></a>
+@if (SignInManager.IsSignedIn(User))
+{
+<div class="dropdown-menu dropdown-menu-right pullDown">
+    <div class="dropdown-title">Hello @UserManager.GetUserName(User)!</div>
+    <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" class="dropdown-item has-icon">
+        <i class="far fa-user"></i>
+        个人信息
+    </a> <a href="#" class="dropdown-item has-icon">
+        <i class="fas fa-bolt"></i>
+        活动
+    </a> <a href="#" class="dropdown-item has-icon">
+        <i class="fas fa-cog"></i>
+        设置
+    </a>
+    <div class="dropdown-divider"></div>
+
+    <button type="submit" class="dropdown-item has-icon text-danger btn btn-link navbar-btn navbar-link">
+        <i style="padding-top:6px" class="fas fa-sign-out-alt"></i>
+        注销
+    </button>
+</div>
+}
+else
+{
+<div class="dropdown-menu dropdown-menu-right pullDown">
+    <div class="dropdown-title">请先登录</div>
+    <a asp-area="Identity" asp-page="/Account/Register" class="dropdown-item has-icon">注册</a>
+    <a asp-area="Identity" asp-page="/Account/Login" class="dropdown-item has-icon">登录</a>
+</div>
+}

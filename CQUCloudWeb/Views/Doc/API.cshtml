@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewData["Title"] = "Document";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+    <div style="min-height:600px;padding-left:10%;padding-right:10%">
+        <h1>
+            API 文档
+        </h1>
+        <br />
+        <br />
+        <h4>
+            (鼠标移至最左侧打开目录)
+        </h4>
+        <br />
+        <br />
+        <ul class="list-group">
+            <li class="list-group-item"><a href="~/doc/CarDetection">车辆检测API</a></li>
+            <li class="list-group-item"><a href="~/doc/FaceDetection">人脸检测API</a></li>
+            <li class="list-group-item"><a href="~/doc/PedestrianDetection">行人检测检测API</a></li>
+            <li class="list-group-item"><a href="~/doc/AttributePrediction">动物属性预测API</a></li>
+            <li class="list-group-item"><a href="~/doc/ImageEnhance">图像增强API</a></li>
+            <li class="list-group-item">医学语义分割(暂不支持API调用，<a href="~/doc/SDK">请查看SDK</a>)</li>
+        </ul>
+        
+        <br />
+        <br />
+        <br />
+        <br />
+        <h1>官方API调用方法</h1>
+        <br />
+        <br />
+        <h2>第一步：注册登录</h2>
+        <br />
+        <p>请点击右上角注册按钮注册，或点此链接<a asp-area="Identity" asp-page="/Account/Register">Register</a></p>
+        <img src="~/doc/注册.png" />
+        <br />
+        <h2>第二步：创建应用</h2>
+        <br />
+        <p>请点击上方菜单栏的生成APIKey按钮，或点此链接<a href="~/apps/CreateAPI">生成APIKey</a></p>
+        <p>进入页面后，请输入应用名称，并选择所需要的共性关键技术，之后点击创建即可。</p>
+        <img src="~/doc/生成APIKEY.png" />
+        <img src="~/doc/创建应用.png" />
+        <br />
+        <h2>第三步：查看调用链接</h2>
+        <br />
+        <p>跳转到应用管理界面后(若未跳转，请点此链接<a href="~/apps/index">应用管理</a>）</p>
+        <p>点击所创建应用右侧的查看APIKey即可查看调用链接</p>
+        <img src="~/doc/查看链接.png" />
+        <img src="~/doc/调用链接.png" />
+        <br />
+        <h2>第四步：调用请求</h2>
+        <br />
+        <p>请使用Http Post请求调用该链接(在本文档中使用Postman进行演示)</p>
+        <p>请使用Post请求，并将所需输入文件放入Body->form-data的key-value里。key值可任意设置,value类型请设置为file</p>
+        <img src="~/doc/调用API.png" />
+        <br />
+        <br />
+        <br />
+        <br />
+    </div>

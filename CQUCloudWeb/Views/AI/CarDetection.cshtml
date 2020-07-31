@@ -1,0 +1,29 @@
+﻿@{
+    Layout = "/Views/Shared/_AILayout.cshtml";
+}
+<!-- banner begin -->
+<section id="banner">
+    <div id="banner_tabs" class="flexslider">
+        <a title="" href="#">
+            <img width="1920" height="482" alt="" style="background: url(../images/banner/cars.jpg) no-repeat center; background-size:cover;" src="~/images/alpha.png">
+        </a>
+    </div>
+</section>
+<!-- banner end -->
+<section style="padding-top:5%;padding-bottom:5%">
+    <h2>车辆检测</h2>
+    <h3>SSD算法(Single Shot MultiBox Detector)</h3>
+    <br />
+    <br />
+    <p style="padding-left:20%;padding-right:20%">整个网络采用了one stage思想的SSD算法，拥有较高的检测速度。并且网络中融入了Faster R-CNN中的anchors思想，并且做了特征分层提取并依次计算边框回归和分类操作，适应多种尺度目标的训练和检测任务。</p>
+</section>
+<section style="padding-top:100px; background-color:white; color:#000;min-height:800px">
+    <br />
+    <h2>功能演示</h2>
+    <br />
+    <br />
+    <div class="aicontainer">
+        <iframe src="~/html/AI/CarDetection.html" scrolling="no" class="aiframe"></iframe>
+    </div>
+</section>
+

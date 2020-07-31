@@ -1,0 +1,133 @@
+﻿
+@{
+    ViewData["Title"] = "Document";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+    <div style="min-height:600px;padding-left:10%;padding-right:10%">
+        <h1>
+            API 文档
+        </h1>
+        <br />
+        <br />
+        <h4>
+            (鼠标移至最左侧打开目录)
+        </h4>
+        <br />
+        <br />
+        <a href="~/doc/API">算法调用方法</a>
+        <br />
+        <br />
+        <h1>车辆识别 API</h1>
+        <br />
+        <br />
+        <h3>
+            描述
+        </h3>
+        <p>传入视频进行车辆检测。</p>
+        <p>可以检测视频内所有车辆,提供置信度与屏幕坐标位置。</p>
+        <h3>
+            视频要求
+        </h3>
+        <p>视频格式:MPEG4</p>
+        <p>视频文件大小:小于50MB</p>
+        <h3>版本</h3>
+        <p>
+            1.0
+        </p>
+        <h3>调用URL</h3>
+        <p>http://cqucloud.vip.qydev.com/api/CarDetection</p>
+        <h3>调用方法</h3>
+        <p>Http POST</p>
+        <h3>请求体格式</h3>
+        <p>multipart/form-data (key可任意设定)</p>
+        <h3>请求参数</h3>
+        <table class="table">
+            <caption>请求参数</caption>
+            <thead>
+                <tr>
+                    <th>参数名</th>
+                    <th>类型</th>
+                    <th>参数说明</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>api_key</td>
+                    <td>String</td>
+                    <td>调用此API的API Key</td>
+
+                </tr>
+                <tr>
+                    <td>video_file</td>
+                    <td>File</td>
+                    <td>一个MP4视频，二进制文件，需要用post multipart/form-data的方式上传。</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>返回值说明</h3>
+        <table class="table">
+            <caption>返回值说明</caption>
+            <thead>
+                <tr>
+                    <th>字段</th>
+                    <th>类型</th>
+                    <th>说明</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>used_ticks</td>
+                    <td>Long Int</td>
+                    <td>本次调用所花费时间Tick</td>
+                </tr>
+                <tr>
+                    <td>0 ... n</td>
+                    <td>Array</td>
+                    <td>当前帧数的车辆数组</td>
+                </tr>
+                <tr>
+                    <td>confidence</td>
+                    <td>Float</td>
+                    <td>检测到该车辆的置信度</td>
+                </tr>
+                <tr>
+                    <td>rect</td>
+                    <td>Int Array</td>
+                    <td>该车辆在屏幕坐标的位置，数组内依次为[left,top,right,bottom]</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>返回值示例</h3>
+        <h4>请求成功返回示例</h4>
+        <pre class="CodeContainer" style="height: 300px;"><span class="ObjectBrace">{</span>
+            <span class="PropertyName">"0"</span>: <span class="ArrayBrace">[</span>
+            <span class="ObjectBrace">{</span>
+            <span class="PropertyName">"confidence"</span>: <span class="Number">95.51<span class="Comma">,</span> </span>
+            <span class="PropertyName">"rect"</span>: <span class="ArrayBrace">[</span>
+            <span class="Number">332<span class="Comma">,</span> </span>
+            <span class="Number">134<span class="Comma">,</span> </span>
+            <span class="Number">498<span class="Comma">,</span> </span>
+            <span class="Number">270</span>
+            <span class="ArrayBrace">]</span>
+            <span class="ObjectBrace">}</span><span class="Comma">,</span>
+            <span class="PropertyName">"1207"</span>: <span class="ArrayBrace">[</span>
+            <span class="ObjectBrace">{</span>
+            <span class="PropertyName">"confidence"</span>: <span class="Number">21.79<span class="Comma">,</span> </span>
+            <span class="PropertyName">"rect"</span>: <span class="ArrayBrace">[</span>
+            <span class="Number">197<span class="Comma">,</span> </span>
+            <span class="Number">142<span class="Comma">,</span> </span>
+            <span class="Number">212<span class="Comma">,</span> </span>
+            <span class="Number">160</span>
+            <span class="ArrayBrace">]</span>
+            <span class="ObjectBrace">}</span>
+            <span class="ArrayBrace">]</span><span class="Comma">,</span> 
+            <span class="PropertyName">"used_ticks"</span>: <span class="Number">1728668</span>
+            <span class="ObjectBrace">}</span>
+        </pre>
+        <br />
+
+        <br />
+
+        <br />
+
+    </div>

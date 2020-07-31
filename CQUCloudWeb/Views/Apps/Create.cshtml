@@ -1,0 +1,56 @@
+﻿@model CQUCloudWeb.Models.App
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>创建应用</h2>
+
+<h4>Create App</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        @{
+            bool isCreatable = true;
+            if (ViewData["Creatable"] != null)
+            {
+                isCreatable = (bool)ViewData["Creatable"];
+            }
+            if (isCreatable == true)
+            {
+                <form asp-action="Create">
+                    <div class="form-group">
+                        <label class="control-label">算法名</label>
+                        <br />
+                        <label style="color:blue" class="control-label">@ViewData["AlgorithmName"]</label>
+                    </div>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="AlgorithmRefId" class="control-label"></label>
+                        <select asp-for="AlgorithmRefId" class="form-control" asp-items="ViewBag.AlgorithmRefId"></select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AppName" class="control-label"></label>
+                        <input asp-for="AppName" class="form-control" />
+                        <span asp-validation-for="AppName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="创建" class="btn btn-default" />
+                    </div>
+                </form>
+            }
+            else if ((bool)ViewData["Creatable"] == false)
+            {
+                <h2>@ViewData["ErrorMsg"].ToString()</h2>
+            }
+        }
+    </div>
+
+</div>
+
+<div>
+    <a asp-controller="Algorithms" asp-action="Index">返回列表</a>
+</div>
+

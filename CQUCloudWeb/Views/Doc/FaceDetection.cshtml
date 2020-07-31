@@ -1,0 +1,159 @@
+﻿
+@{
+    ViewData["Title"] = "Document";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+<div style="min-height:600px;padding-left:10%;padding-right:10%">
+    <h1>
+        API 文档
+    </h1>
+    <br />
+    <br />
+    <h4>
+        (鼠标移至最左侧打开目录)
+    </h4>
+    <br />
+    <br />
+    <a href="~/doc/API">算法调用方法</a>
+    <br />
+    <br />
+    <h1>人脸检测 API</h1>
+    <br />
+    <br />
+    <h3>
+        描述
+    </h3>
+    <p>传入图片进行人脸检测。</p>
+    <p>可以检测图片内所有人脸，提供人脸位置、朝向、年龄、性别。</p>
+    <h3>
+        图片要求
+    </h3>
+    <p>图片格式:JPG(JPEG)，PNG</p>
+    <p>图片文件大小:小于2MB</p>
+    
+    
+    <h3>版本</h3>
+    <p>
+        1.0
+    </p>
+    <h3>调用URL</h3>
+    <p>http://cqucloud.vip.qydev.com/api/FaceDetection</p>
+    <h3>调用方法</h3>
+    <p>Http POST</p>
+    <h3>请求体格式</h3>
+    <p>multipart/form-data (key可任意设定)</p>
+    <h3>请求参数</h3>
+    <table class="table">
+        <caption>请求参数</caption>
+        <thead>
+            <tr>
+                <th>参数名</th>
+                <th>类型</th>
+                <th>参数说明</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>api_key</td>
+                <td>String</td>
+                <td>调用此API的API Key</td>
+
+            </tr>
+            <tr>
+                <td>image_file</td>
+                <td>File</td>
+                <td>一个图片，二进制文件，需要用post multipart/form-data的方式上传。</td>
+            </tr>
+        </tbody>
+    </table>
+    <h3>返回值说明</h3>
+    <table class="table">
+        <caption>返回值说明</caption>
+        <thead>
+            <tr>
+                <th>字段</th>
+                <th>类型</th>
+                <th>说明</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>used_ticks</td>
+                <td>Long Int</td>
+                <td>本次调用所花费时间Tick</td>
+            </tr>
+            <tr>
+                <td>face_num</td>
+                <td>Int</td>
+                <td>检测到人脸数</td>
+            </tr>
+            <tr>
+                <td>faces</td>
+                <td>Array</td>
+                <td>检测到的人脸属性数组</td>
+            </tr>
+            <tr>
+                <td>rect</td>
+                <td>Int Array</td>
+                <td>人脸在屏幕坐标的位置，数组内依次为[left,top,right,bottom]</td>
+            </tr>
+            <tr>
+                <td>orient</td>
+                <td>Int</td>
+                <td>人脸朝向，值为1,2,3,4分别对应0°,90°,270°,180°<img src="/doc/orient.png" /></td>
+            </tr>
+            <tr>
+                <td>3Dstatus</td>
+                <td>Int</td>
+                <td>人脸3D角度检测状态，非0为异常</td>
+            </tr>
+            <tr>
+                <td>euler_angle</td>
+                <td>Int Array</td>
+                <td>人脸3D角度的欧拉角表示，数组内依次为[x,y,z]，对应Yaw,Pitch,Roll为<img src="/doc/euler.jpg" /></td>
+            </tr>
+            <tr>
+                <td>age</td>
+                <td>Int</td>
+                <td>检测到人脸的年龄，等于0时为未知</td>
+            </tr>
+            <tr>
+                <td>gender</td>
+                <td>Int</td>
+                <td>检测到人脸的性别，0:男性; 1:女性; -1:未知</td>
+            </tr>
+        </tbody>
+    </table>
+    <h3>返回值示例</h3>
+    <h4>请求成功返回示例</h4>
+    <pre class="CodeContainer" style="height: 602px;"><span class="ObjectBrace">{</span>
+        <span class="PropertyName">"used_ticks"</span>: <span class="Number">10356954<span class="Comma">,</span> </span>
+        <span class="PropertyName">"face_num"</span>: <span class="Number">1<span class="Comma">,</span> </span>
+        <span class="PropertyName">"faces"</span>: <span class="ArrayBrace">[</span>
+        <span class="ObjectBrace">{</span>
+        <span class="PropertyName">"rect"</span>: <span class="ArrayBrace">[</span>
+        <span class="Number">130<span class="Comma">,</span> </span>
+        <span class="Number">173<span class="Comma">,</span> </span>
+        <span class="Number">499<span class="Comma">,</span> </span>
+        <span class="Number">542</span>
+        <span class="ArrayBrace">]</span><span class="Comma">,</span> 
+        <span class="PropertyName">"orient"</span>: <span class="Number">1<span class="Comma">,</span> </span>
+        <span class="PropertyName">"3Dstatus"</span>: <span class="Number">0<span class="Comma">,</span> </span>
+        <span class="PropertyName">"euler_angle"</span>: <span class="ArrayBrace">[</span>
+        <span class="Number">-10.70544<span class="Comma">,</span> </span>
+        <span class="Number">-3.563833<span class="Comma">,</span> </span>
+        <span class="Number">-0.9436586</span>
+        <span class="ArrayBrace">]</span><span class="Comma">,</span> 
+        <span class="PropertyName">"age"</span>: <span class="Number">25<span class="Comma">,</span> </span>
+        <span class="PropertyName">"gender"</span>: <span class="Number">1</span>
+        <span class="ObjectBrace">}</span>
+        <span class="ArrayBrace">]</span>
+<span class="ObjectBrace">}</span>
+    </pre>
+    <br />
+
+    <br />
+
+    <br />
+
+</div>
